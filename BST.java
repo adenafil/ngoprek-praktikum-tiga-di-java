@@ -1,6 +1,10 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class BST {
     
     public Node root;
+    public int minData;
 
     public BST() {
         this.root = null;
@@ -16,6 +20,8 @@ public class BST {
 
         if (isEmpty()) {
             this.root = baru;
+            // minData = root.data;
+            setMinData(root.data);
             System.out.println(level);
             // System.out.println(has(this.root, data));
             return;
@@ -31,6 +37,7 @@ public class BST {
                 if (tempRoot.leftChild == null) {
                     tempRoot.leftChild = baru;
                     System.out.println(level);
+                    setMinData(data);
                     break;
                 }
                 tempRoot = tempRoot.leftChild;
@@ -41,6 +48,7 @@ public class BST {
                 if (tempRoot.rightChild == null) {
                     tempRoot.rightChild = baru;
                     System.out.println(level);
+                    setMinData(data);
                     break;
                 }
 
@@ -84,6 +92,39 @@ public class BST {
                 node = node.rightChild;
             }
 
+
+        }
+    }
+
+    public void setMinData(int newData) {
+        if (minData == 0) minData = newData;
+
+        if (minData > newData) {
+            minData = newData;
+            return;
+        }
+    }
+
+    public int getMinData() {
+        return minData;
+    }
+
+    public void searchNodeVWithBFS(int value) {
+        Queue<Node> list = new LinkedList<>();
+        list.add(root);
+
+        while (!list.isEmpty()) {
+            Node current = list.poll();
+
+            System.out.print(current.data + " ");
+
+            if (current.data == value) break;
+
+            if (current.leftChild != null) list.add(current.leftChild);
+
+            if (current.rightChild != null) list.add(current.rightChild);
+
+            if (list.isEmpty()) System.out.print(-1);
 
         }
     }
